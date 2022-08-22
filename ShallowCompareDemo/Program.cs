@@ -69,14 +69,14 @@ namespace ShallowCompareDemo
         {
             Console.WriteLine("Esses objetos devem ser iguais");
             Console.WriteLine(ComparadorDeObjetos.SaoIguais(
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 }
+                    new Agendamento {Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
+                    new Agendamento {Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 }
                 ));
 
             Console.WriteLine("Esses objetos devem ser diferentes, a nota está diferente");
             Console.WriteLine(ComparadorDeObjetos.SaoIguais(
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 }
+                    new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
+                    new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 }
                 ));
         }
 
@@ -85,15 +85,15 @@ namespace ShallowCompareDemo
         {
             Console.WriteLine("Esses objetos devem ser iguais, repare o Id diferente sendo ignorado");
             Console.WriteLine(ComparadorDeObjetos.SaoIguaisUsandoReflection(
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 2 },
+                    new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
+                    new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 2 },
                     "Id"
                 ));
 
             Console.WriteLine("Esses objetos devem ser diferentes, a nota está diferente, repare o Id diferente sendo ignorado");
             Console.WriteLine(ComparadorDeObjetos.SaoIguaisUsandoReflection(
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1, Id = 2 },
+                    new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
+                    new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1, Id = 2 },
                     "Id"
                 ));
         }
@@ -103,15 +103,15 @@ namespace ShallowCompareDemo
         {
             Console.WriteLine("Esses objetos devem ser iguais, repare o Id diferente sendo ignorado e o AgendamentoDTO não tem Id");
             Console.WriteLine(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
-                    new AgendamentoDto { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
+                    new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
+                    new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
                     "Id"
                 ));
 
             Console.WriteLine("Esses objetos devem ser diferentes, a nota está diferente, repare o Id diferente sendo ignorado e o AgendamentoDTO não tem Id");
             Console.WriteLine(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(
-                    new Agendamento { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
-                    new AgendamentoDto { Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 },
+                    new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
+                    new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 },
                     "Id"
                 ));
         }

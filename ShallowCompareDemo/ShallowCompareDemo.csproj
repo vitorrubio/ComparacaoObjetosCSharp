@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Agendamento.cs" />
     <Compile Include="AgendamentoDto.cs" />
+    <Compile Include="AgendamentoStruct.cs" />
     <Compile Include="ComparadorDeObjetos.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

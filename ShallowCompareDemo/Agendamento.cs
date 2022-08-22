@@ -14,6 +14,7 @@ namespace ShallowCompareDemo
         public int Nota { get; set; }
         public double Total { get; set; }
         public string Observacao { get; set; }
+        public bool Ativo { get; set; }
 
     }
 }

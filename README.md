@@ -1,3 +1,12 @@
+# Comparação de Objetos em C#
+Enquanto a comparação de valores de variáveis primitivas como inteiros ou strings e value types como bytes e chars pode ser fácil, a comparação de dois objetos em uma linguagem cmo C# é difícil.
+O .Net Framework vem com algumas soluções padrões para comparação de alguns objetos e estruturas distribuídos com o ambiente .Net, mas para todos os objetos feitos pelo desenvolvedor, existe o método Equals.
+O método Equals vai retornar true se e somente se dois objetos são exatamente a mesma instância. 
+O Equals é virtual, significando que ele pode ser sobrescrito para implementar seu próprio mecanismo de igualdade. Mas você deve implementar Equals sempre junto com GetHashCode e com muito cuidado, pois ele pode ter impactos negativos em listas, ordenação e distinct. 
+Comparar as propriedades de um objeto mas não de suas listas ou objetos relacionados pode ser feito manualmente ou de várias outras formas. Nós chamamos essa comparação rasa de Shallow Compare.
+Comparar tudo, inclusive comparar recursivamente os objetos e coleções associados a um objeto chamamos de Deep Compare. 
+
+
 # Exemplo de Shallow Compare ou Comparação Rasa
 
 ## Problema: comparar se uma lista de objetos vindos de uma API ou Banco de Dados já contém um objeto "*SEMELHANTE*" a um objeto novo vindo de um formulário/tela/cadastro 
@@ -45,7 +54,7 @@ Console.WriteLine(iguais); //true
 
 
 Uma das maneiras de fazer isso é comparando as propriedades uma a uma. Outra maneira é usando reflection para comparar as propriedades e fornecer uma lista de propriedades a ignorar. 
-Também existem as possibilidades das novas versões do C# de se usar Record Types ou Destructurers + Tuples para a comparação. E exite também a interface Icomparable, que além de verificar igualdade pode também retornar qual é "maior" ou "menor" e ser usada para ordenações.
+Também existem as possibilidades das novas versões do C# de se usar Record Types ou Destructurers + Tuples para a comparação. E existe também a interface IEquatable, que te força a implementar o Equals corretamente.
 No tutorial a seguir faremos em uma classe estática separadamente métodos para comparar objetos manualmente ou usando reflection. Você pode colocar esse código na sua classe que deseja comparar, ou em classes utilitárias do seu projeto. 
 
 
@@ -63,3 +72,11 @@ No tutorial a seguir faremos em uma classe estática separadamente métodos para c
 - [value equality](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/how-to-define-value-equality-for-a-type)
 - [Reference Types X Value Types](http://www.linhadecodigo.com.br/artigo/2238/reference-types-e-sua-diferenca-para-value-types-em-csharp.aspx)
 - [Reference Types X Value Types](https://www.albahari.com/valuevsreftypes.aspx)
+- [Deep Compare](https://www.cyotek.com/blog/comparing-the-properties-of-two-objects-via-reflection)
+- [Deep Compare](https://devblog.cyotek.com/post/comparing-the-properties-of-two-objects-via-reflection)
+- [How to compare two objects (testing for equality) in C#](https://grantwinney.com/how-to-compare-two-objects-testing-for-equality-in-c/)
+- [Comparing object properties in c#](https://stackoverflow.com/questions/506096/comparing-object-properties-in-c-sharp)
+
+
+### Modo correto de implementar Equals
+- [Equals](https://docs.microsoft.com/en-us/dotnet/api/system.object.equals?view=net-6.0)

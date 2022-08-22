@@ -35,6 +35,19 @@ namespace ShallowCompareDemo
         /// <returns></returns>
         public static bool SaoIguaisUsandoReflection(Agendamento a, Agendamento b, params string[] ignoreProps)
         {
+            //se os dois são null então ambos são iguais 
+            if(a == null && b == null)
+            {
+                return true;
+            }
+
+            //se um dos dois são null então são diferentes
+            if (a == null || b == null)
+            {
+                return false;
+            }
+
+
             //se são a mesma referencia, retorna true e evita demais comparações
             if(object.ReferenceEquals(a,b))
             {
@@ -42,7 +55,7 @@ namespace ShallowCompareDemo
             }
 
             //obtendo apenas as propriedades não ignoradas
-            var propriedades = a.GetType().GetProperties().Where(x => !ignoreProps.Contains(x.Name));
+            var propriedades = a.GetType().GetProperties().Where(x => x.CanRead && !ignoreProps.Contains(x.Name));
 
             foreach(var propriedade in propriedades)
             {
@@ -70,6 +83,18 @@ namespace ShallowCompareDemo
         /// <returns></returns>
         public static bool ObjetosDiferentesSaoIguaisUsandoReflection(Object a, Object b, params string[] ignoreProps)
         {
+            //se os dois são null então ambos são iguais 
+            if(a == null && b == null)
+            {
+                return true;
+            }
+
+            //se um dos dois são null então são diferentes
+            if (a == null || b == null)
+            {
+                return false;
+            }
+
             //se são a mesma referencia, retorna true e evita demais comparações
             if (object.ReferenceEquals(a, b))
             {
@@ -77,7 +102,13 @@ namespace ShallowCompareDemo
             }
 
             //obtendo apenas as propriedades não ignoradas
-            var propriedades = a.GetType().GetProperties().Where(x => !ignoreProps.Contains(x.Name));
+            var nomesPropriedadesA = a.GetType().GetProperties().Where(x => x.CanRead && !ignoreProps.Contains(x.Name)).Select(p => p.Name);
+            
+            //var nomesPropriedadesB = b.GetType().GetProperties().Where(x => x.CanRead && !ignoreProps.Contains(x.Name)).Select(p => p.Name);
+            // propriedadesComuns = nomesPropriedadesA.Intersect(nomesPropriedadesB).Distinct().ToList();
+            //var propriedades = a.GetType().GetProperties().Where(x => propriedadesComuns.Contains(x.Name) );
+
+            var propriedades = a.GetType().GetProperties().Where(x => x.CanRead && !ignoreProps.Contains(x.Name));
 
             foreach (var propriedade in propriedades)
             {
