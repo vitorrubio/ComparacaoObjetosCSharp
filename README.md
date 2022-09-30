@@ -79,7 +79,7 @@ O .Net Framework vem com algumas soluções padrões para comparação de alguns [obj
 
 Existe também a possibilidade de fazer o [override do .Equals e do operador ==](./OverrideEquals/), ou de implementar a [interface IEquatable](./IEquatableDemo/).
 
-E por último, quando você precisa comparar as propriedades de objetos de tipos diferentes e ainda ignorar algumas propriedades (como Ids, que geralmente são gerados automaticamente pelo banco de dados), você pode criar alguma estratégia de [Shallow Compare](./ShallowCompare/) ou comparação rasa.
+E por último, quando você precisa comparar as propriedades de objetos de tipos diferentes e ainda ignorar algumas propriedades (como Ids, que geralmente são gerados automaticamente pelo banco de dados), você pode criar alguma estratégia de [Shallow Compare](./ShallowCompareDemo/) ou comparação rasa.
 
 
 
@@ -87,7 +87,7 @@ E por último, quando você precisa comparar as propriedades de objetos de tipos d
 - [objetos e estruturas](./ValueAndReferenceTypes/)
 - [override do .Equals e do operador ==](./OverrideEquals/) (cuidado com o uso deste)
 - [interface IEquatable](./IEquatableDemo/)
-- [Shallow Compare](./ShallowCompare/) 
+- [Shallow Compare](./ShallowCompareDemo/) 
 
 
 
