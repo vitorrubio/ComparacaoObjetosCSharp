@@ -1,71 +1,97 @@
 # Comparação de Objetos em C#
 Enquanto a comparação de valores de variáveis primitivas como inteiros ou strings e value types como bytes e chars pode ser fácil, a comparação de dois objetos em uma linguagem cmo C# é difícil.
-O .Net Framework vem com algumas soluções padrões para comparação de alguns objetos e estruturas distribuídos com o ambiente .Net, mas para todos os objetos feitos pelo desenvolvedor, existe o método Equals.
-O método Equals vai retornar true se e somente se dois objetos são exatamente a mesma instância. 
-O Equals é virtual, significando que ele pode ser sobrescrito para implementar seu próprio mecanismo de igualdade. Mas você deve implementar Equals sempre junto com GetHashCode e com muito cuidado, pois ele pode ter impactos negativos em listas, ordenação e distinct. 
-Comparar as propriedades de um objeto mas não de suas listas ou objetos relacionados pode ser feito manualmente ou de várias outras formas. Nós chamamos essa comparação rasa de Shallow Compare.
-Comparar tudo, inclusive comparar recursivamente os objetos e coleções associados a um objeto chamamos de Deep Compare. 
+Para entender a razão disso você precisa entender primeiro o que são objetos. Leia a seção "O que são objetos". Se isso não for segredo para você pule para a seção "Comparação de Objetos".
 
 
-# Exemplo de Shallow Compare ou Comparação Rasa
-
-## Problema: comparar se uma lista de objetos vindos de uma API ou Banco de Dados já contém um objeto "*SEMELHANTE*" a um objeto novo vindo de um formulário/tela/cadastro 
-
-Para resolver esse problema você precisa saber se as propriedades, e apenas as propriedades do objeto são iguais. Você deve desprezar o Id, já que objetos do tipo Entidade tem sua "Identidade" (o Id) e ele vem preenchido do banco de dados, mas os objetos novos não tem o Id ou o mesmo é Zero.
-Esse tipo de comparação, comparando apenas as propriedades é chamada de Shallow Compare ou Comparação Rasa.
-
-## Problema: comparar se dois objetos do C# tem os mesmos valores
-
-As vezes temos que comparar dois objetos para ver se são "iguais", mas o que é igualdade de objetos?
-O exemplo e explicação que segue esse repo está em C# mas o conceito pode se aplicar também a Java e Delphi.
-Como se compara dois objetos? Na maioria das linguagens orientadas a objetos as variáveis objetos são Tipos de Referência [(reference types)](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types) e isso significa que na verdade elas são ponteiros: números inteiros de 4 bytes apontando pra algum lugar da memória. 
-Então se você tem uma classe Agendamento e duas variáveis:
-
+## O que são objetos?
+Quando você cria uma variável "a" do tipo int, double, byte, char no C# você está reservando um espaço de memória, dando o nome para ele e armazenando o valor ali. A variável contém o próprio valor. 
+Se você cria uma nova variável "b" e atribui o valor de a, nesse momento você copiou o valor e as duas são iguais. 
+Se você mudar o valor de "a" os dois valores passarão a ser diferentes.
 ```
-Agendamento a = new Agendamento();
-Agendamento b = new Agendamento();
-bool iguais = a == b;
-Console.WriteLine(iguais); //false
-
+int a = 2; //a armazena 2, é o próprio valor
+int b = a; //copio o valor de a em b
+bool antes =  (a == b); //verdadeiro
+a = 3; //mudo  o valor de a
+bool depois =  (a == b); //falso
 ```
 
-Compará-los dessa maneira retornará false, por mais que suas propriedades sejam sempre iguais.
-Usando o método Equals padrão também não funcionaria nesse contexto* 
+Com isso provamos que "a" e "b" não são a mesma "variável", não estão no mesmo lugar na memória. 
 
+
+Mas com objetos (reference types) a coisa é diferente.
+
+Considere que você tem uma classe Usuario feita da seguinte maneira:
 ```
-Agendamento a = new Agendamento();
-Agendamento b = new Agendamento();
-bool iguais = a.Equals( b);
-Console.WriteLine(iguais); //false
-
-```
-
-Tipos de Referência ou objetos funcionam assim: só são iguais quando duas variáveis apontam para a mesma instância (mesmo objeto)
-
-```
-Agendamento a;
-Agendamento b;
-a = b = new Agendamento();
-bool iguais = a.Equals( b);
-Console.WriteLine(iguais); //true
-iguais = a == b;
-Console.WriteLine(iguais); //true
+    public class UsuarioClasse
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public DateTime DataNascimento { get; set; }
+    }
 ```
 
+E você cria *UM* objeto assim:
 
-Uma das maneiras de fazer isso é comparando as propriedades uma a uma. Outra maneira é usando reflection para comparar as propriedades e fornecer uma lista de propriedades a ignorar. 
-Também existem as possibilidades das novas versões do C# de se usar Record Types ou Destructurers + Tuples para a comparação. E existe também a interface IEquatable, que te força a implementar o Equals corretamente.
-No tutorial a seguir faremos em uma classe estática separadamente métodos para comparar objetos manualmente ou usando reflection. Você pode colocar esse código na sua classe que deseja comparar, ou em classes utilitárias do seu projeto. 
+E você cria dois objetos idênticos em suas propriedades:
+```
+    UsuarioClasse uc1 = new UsuarioClasse { Id = 1, Nome = "João", DataNascimento = DateTime.Today };
+    UsuarioClasse uc2 = uc1;
+```
+
+Esses objetos são iguais? 
+Se você chamar uc1 == uc2 ou uc1.Equals(uc2) ambos vão ser verdadeiros
+
+```
+    Console.WriteLine($"Os itens são iguais com == ? {uc1 == uc2}");
+    Console.WriteLine($"Os itens são iguais com .Equals ? {uc1.Equals(uc2)}");
+```
+
+Mas se você mudar uma propriedade de uc1, por exemplo uc1.Nome = "Jose", ainda assim os dois objetos serão iguais. E se verificar o valor de *uc2.Nome* verá que o nome "mudou sozinho".
+
+```
+    uc1.Nome = "Jose";
+    Console.WriteLine(uc2.Nome); //saiu "José", mas não era "João" ?
+    Console.WriteLine($"Os itens são iguais com == ? {uc1 == uc2}"); //verdadeiro
+    Console.WriteLine($"Os itens são iguais com .Equals ? {uc1.Equals(uc2)}"); //verdadeiro    
+```
+
+Como você percebeu, diferentemente dos nossos inteiros "a" e "b", as variáveis "uc1" e "uc2" são o *MESMO* objeto e não podem ser modificadas separadamente. 
+Isso acontece porque um objeto é uma instância de uma classe na memória, e as variáveis "uc1" e "uc2" são referências que apontam para esse objeto. Ou seja, "uc1" e "uc2" são *PONTEIROS* e como elas apontam para o mesmo objeto, no mesmo lugar, você não tem dois objetos, você na verdade tem um único objeto com duas variáveis apontando pra ele. 
+
+E se você criar dois objetos idênticos em suas propriedades, mas com instâncias diferentes?
+```
+    UsuarioClasse uc1 = new UsuarioClasse { Id = 1, Nome = "João", DataNascimento = DateTime.Today };
+    UsuarioClasse uc2 = new UsuarioClasse { Id = 1, Nome = "João", DataNascimento = DateTime.Today };
+```
+
+A pergunta é: será que esses objetos são iguais? Como podemos compará-los? 
+
+```
+    Console.WriteLine($"Os itens são iguais com == ? {uc1 == uc2}"); //falso
+    Console.WriteLine($"Os itens são iguais com .Equals ? {uc1.Equals(uc2)}"); //falso
+```
+
+O método Equals vai retornar true *se e somente se dois* objetos são exatamente a mesma instância. 
+
+Como vimos, a comparação desses dois objetos sempre vai ser falsa, apesar dos valores das propriedades serem iguais. Esses dois objetos são diferentes porque você de fato tem duas instâncias diferentes na memória.
+
+O .Net Framework vem com algumas soluções padrões para comparação de alguns [objetos e estruturas](ValueAndReferenceTypes/readme.md). Você pode criar uma struct, record ou record struct, nesses tipos de dados a comparação com == funciona. Lembrando que record é um reference type também, é um tipo especial de classe, enquanto structs e record structs são tipos estruturados (value types) semelhantes ao struct de C/C++ ou ao *record* do Pascal/Delphi.
+
+Existe também a possibilidade de fazer o [override do .Equals e do operador ==](OverrideEquals/readme.md), ou de implementar a [interface IEquatable](IEquatableDemo/readme.md).
+
+E por último, quando você precisa comparar as propriedades de objetos de tipos diferentes e ainda ignorar algumas propriedades (como Ids, que geralmente são gerados automaticamente pelo banco de dados), você pode criar alguma estratégia de [Shallow Compare](ShallowCompare/readme.md) ou comparação rasa.
 
 
 
+## Guia deste repositório
+- [objetos e estruturas](ValueAndReferenceTypes/readme.md)
+- [override do .Equals e do operador ==](OverrideEquals/readme.md) (cuidado com o uso deste)
+- [interface IEquatable](IEquatableDemo/readme.md)
+- [Shallow Compare](ShallowCompare/readme.md) 
 
 
-### Observações e Fontes
-* É possível sobrecarregar o método Equals para verificar se dois objetos são iguais e até sobrecarregar o operador de igualdade, mas não é o caso nesse contexto. Não é disso que estamos falando agora. Geralmente para entidades que são persistidas em banco de dados fazemos o Equals baseado no Id. mas há uma forma correta de sobrecarregar o Equals, e se você sobrecarrega o Equals é obrigado a sobrecarregar o GetHashCode também. Fazer errado a sobrecarga desses dois métodos pode levar a consequências desastrosas como falhas em ordenação, comparação, violação de chaves primárias e falhas ao incluir, excluir ou juntar listas.
-* Mais tarde veremos a implementação correta de Equals e GetHashCode.
 
-
+### Fontes
 - [Reference Types](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/reference-types)
 - [Value Types](https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-types)
 - [Equality Comparisons](https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/equality-comparisons)
@@ -76,7 +102,3 @@ No tutorial a seguir faremos em uma classe estática separadamente métodos para c
 - [Deep Compare](https://devblog.cyotek.com/post/comparing-the-properties-of-two-objects-via-reflection)
 - [How to compare two objects (testing for equality) in C#](https://grantwinney.com/how-to-compare-two-objects-testing-for-equality-in-c/)
 - [Comparing object properties in c#](https://stackoverflow.com/questions/506096/comparing-object-properties-in-c-sharp)
-
-
-### Modo correto de implementar Equals
-- [Equals](https://docs.microsoft.com/en-us/dotnet/api/system.object.equals?view=net-6.0)
