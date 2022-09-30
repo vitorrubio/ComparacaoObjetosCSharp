@@ -1,0 +1,88 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace ConsoleApp2
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+
+            UsuarioClasse uc1 = new UsuarioClasse { Id = 1, Nome = "João", DataNascimento = DateTime.Today };
+            UsuarioClasse uc2 = new UsuarioClasse { Id = 1, Nome = "João", DataNascimento = DateTime.Today };
+            Console.WriteLine($"Os itens UsuarioClasse são iguais com == ? {uc1 == uc2}");
+            Console.WriteLine($"Os itens UsuarioClasse são iguais com Equals ? {uc1.Equals(uc2)}");
+
+
+            UsuarioStruct us1 = new UsuarioStruct { Id = 1, Nome = "João", DataNascimento = DateTime.Today };
+            UsuarioStruct us2 = new UsuarioStruct { Id = 1, Nome = "João", DataNascimento = DateTime.Today };
+            //Console.WriteLine($"Os itens UsuarioStruct são iguais com == ? {us1 == us2}"); //não pode se não sobrecarregar  o operador
+            Console.WriteLine($"Os itens UsuarioStruct são iguais com Equals ? {us1.Equals(us2)}");
+
+
+
+            UsuarioRecord ur1 = new UsuarioRecord(1, "João", DateTime.Today);
+            UsuarioRecord ur2 = new UsuarioRecord(1, "João", DateTime.Today);
+            Console.WriteLine($"Os itens UsuarioRecord são iguais com == ? {ur1 == ur2}");
+            Console.WriteLine($"Os itens UsuarioRecord são iguais com Equals ? {ur1.Equals(ur2)}");
+
+
+            UsuarioRecordStruct urs1 = new UsuarioRecordStruct(1, "João", DateTime.Today);
+            UsuarioRecordStruct urs2 = new UsuarioRecordStruct(1, "João", DateTime.Today);
+            Console.WriteLine($"Os itens UsuarioRecordStruct são iguais com == ? {urs1 == urs2}");
+            Console.WriteLine($"Os itens UsuarioRecordStruct são iguais com Equals ? {urs1.Equals(urs2)}");
+
+
+            Console.ReadLine();
+
+            //Console.WriteLine(IsIsomorphic("teste", "treco"));
+            //Console.WriteLine(IsIsomorphic("teste", "teste"));
+            //Console.WriteLine(IsIsomorphic("teste", "sonso"));
+            //Console.WriteLine(IsIsomorphic("add", "egg"));
+            //Console.WriteLine(IsIsomorphic("foo", "bar"));
+            //Console.WriteLine(IsIsomorphic("paper", "title"));
+            //Console.WriteLine(IsIsomorphic("paper", "zeh"));
+            //Console.WriteLine(IsIsomorphic("badc", "baba"));
+        }
+
+
+
+
+        public static bool IsIsomorphic(string a, string b)
+        {
+
+            if (a?.Length != b?.Length)
+                return false;
+
+            Dictionary<char, char> dic = new Dictionary<char, char>();
+            for (int i = 0; i < a.Length; i++)
+            {
+                if (!dic.ContainsKey(a[i]) && !dic.ContainsValue(b[i]))
+                {
+                    dic.Add(a[i], b[i]);
+                    continue;
+                }
+
+                if (!dic.ContainsKey(a[i]))
+                {
+                    return false;
+                }
+
+                if (dic[a[i]] != b[i])
+                {
+                    return false;
+                }
+
+            }
+
+            return true;
+        }
+    }
+
+
+
+
+}
+
+
