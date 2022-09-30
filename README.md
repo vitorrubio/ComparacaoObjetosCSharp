@@ -75,19 +75,19 @@ O método Equals vai retornar true *se e somente se dois* objetos são exatamente 
 
 Como vimos, a comparação desses dois objetos sempre vai ser falsa, apesar dos valores das propriedades serem iguais. Esses dois objetos são diferentes porque você de fato tem duas instâncias diferentes na memória.
 
-O .Net Framework vem com algumas soluções padrões para comparação de alguns [objetos e estruturas](ValueAndReferenceTypes/readme.md). Você pode criar uma struct, record ou record struct, nesses tipos de dados a comparação com == funciona. Lembrando que record é um reference type também, é um tipo especial de classe, enquanto structs e record structs são tipos estruturados (value types) semelhantes ao struct de C/C++ ou ao *record* do Pascal/Delphi.
+O .Net Framework vem com algumas soluções padrões para comparação de alguns [objetos e estruturas](./ValueAndReferenceTypes). Você pode criar uma struct, record ou record struct, nesses tipos de dados a comparação com == funciona. Lembrando que record é um reference type também, é um tipo especial de classe, enquanto structs e record structs são tipos estruturados (value types) semelhantes ao struct de C/C++ ou ao *record* do Pascal/Delphi.
 
-Existe também a possibilidade de fazer o [override do .Equals e do operador ==](OverrideEquals/readme.md), ou de implementar a [interface IEquatable](IEquatableDemo/readme.md).
+Existe também a possibilidade de fazer o [override do .Equals e do operador ==](./OverrideEquals), ou de implementar a [interface IEquatable](./IEquatableDemo).
 
-E por último, quando você precisa comparar as propriedades de objetos de tipos diferentes e ainda ignorar algumas propriedades (como Ids, que geralmente são gerados automaticamente pelo banco de dados), você pode criar alguma estratégia de [Shallow Compare](ShallowCompare/readme.md) ou comparação rasa.
+E por último, quando você precisa comparar as propriedades de objetos de tipos diferentes e ainda ignorar algumas propriedades (como Ids, que geralmente são gerados automaticamente pelo banco de dados), você pode criar alguma estratégia de [Shallow Compare](./ShallowCompare) ou comparação rasa.
 
 
 
 ## Guia deste repositório
-- [objetos e estruturas](ValueAndReferenceTypes/readme.md)
-- [override do .Equals e do operador ==](OverrideEquals/readme.md) (cuidado com o uso deste)
-- [interface IEquatable](IEquatableDemo/readme.md)
-- [Shallow Compare](ShallowCompare/readme.md) 
+- [objetos e estruturas](./ValueAndReferenceTypes)
+- [override do .Equals e do operador ==](./OverrideEquals) (cuidado com o uso deste)
+- [interface IEquatable](./IEquatableDemo)
+- [Shallow Compare](./ShallowCompare) 
 
 
 
