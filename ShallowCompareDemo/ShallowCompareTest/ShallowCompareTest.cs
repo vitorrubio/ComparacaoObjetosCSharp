@@ -238,5 +238,61 @@ namespace ShallowCompareTest
             Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(c, b));
             
         }
+
+
+
+
+
+        [TestMethod]
+        public void TesteIgualdadeComTuplas()
+        {
+            DateTime inicio;
+            DateTime fim;
+            int nota;
+            double total;
+            string observacao;
+            bool ativo;
+
+            var agendamento = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
+            var t1 = (inicio, fim, nota, total, observacao, ativo) = agendamento;
+             
+            var agendamentoDto = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, PropriedadeExclusivaDoDto = false };
+            var t2 = (inicio, fim, nota, total, observacao, ativo) = agendamentoDto;
+
+            var agendamentoStruct = new AgendamentoStruct { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
+            var t3 = (inicio, fim, nota, total, observacao, ativo) = agendamentoStruct;
+
+            
+
+            Assert.IsTrue(t1 == t2, $"agendamento e agendamentoDto são iguais? {t1 == t2}");
+            Assert.IsTrue(t1 == t3, $"agendamento e agendamentoStruct são iguais? {t1 == t3}");
+            Assert.IsTrue(t2 == t3, $"agendamentoDto e agendamentoStruct são iguais? {t2 == t3}");
+
+        }
+
+
+        [TestMethod]
+        public void TesteDesigualdadeComTuplas()
+        {
+            DateTime inicio;
+            DateTime fim;
+            int nota;
+            double total;
+            string observacao;
+            bool ativo;
+
+            var agendamento = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
+            var t1 = (inicio, fim, nota, total, observacao, ativo) = agendamento;
+
+            var agendamentoDto = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 20), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, PropriedadeExclusivaDoDto = false };
+            var t2 = (inicio, fim, nota, total, observacao, ativo) = agendamentoDto;
+
+            var agendamentoStruct = new AgendamentoStruct { Ativo = true, Inicio = new DateTime(2022, 8, 20), Fim = new DateTime(2022, 8, 21), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
+            var t3 = (inicio, fim, nota, total, observacao, ativo) = agendamentoStruct;
+
+            Assert.IsFalse(t1 == t2, $"agendamento e agendamentoDto são iguais? {t1 == t2}");
+            Assert.IsFalse(t1 == t3, $"agendamento e agendamentoStruct são iguais? {t1 == t3}");
+            Assert.IsFalse(t2 == t3, $"agendamentoDto e agendamentoStruct são iguais? {t2 == t3}");
+        }
     }
 }
