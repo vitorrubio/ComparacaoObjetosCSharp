@@ -43,3 +43,5 @@ Alguns objetos são Reference Types mas podem ter alguns métodos especiais, como 
 
 - [Create record types](https://learn.microsoft.com/en-us/dotnet/csharp/whats-new/tutorials/records)
 - [with expression (C# reference)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/operators/with-expression)
+- [Records (C# reference)](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record)
+- [How to work with record types in C# 9](https://www.infoworld.com/article/3607372/how-to-work-with-record-types-in-csharp-9.html)
