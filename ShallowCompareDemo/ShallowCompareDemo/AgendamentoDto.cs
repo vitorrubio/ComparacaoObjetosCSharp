@@ -15,6 +15,27 @@ namespace ShallowCompareDemo
         public string Observacao { get; set; }
         public bool Ativo { get; set; }
 
-        public bool PropriedadeNovaApenasDesseLado { get; set; }
+        public bool PropriedadeExclusivaDoDto { get; set; }
+
+        public void Deconstruct(out DateTime inicio, out DateTime fim, out int nota, out double total, out string observacao, out bool ativo, out bool propExclusivaDto)
+        {
+            inicio = this.Inicio;
+            fim = this.Fim;
+            nota = this.Nota;
+            total = this.Total;
+            observacao = this.Observacao;
+            ativo = this.Ativo;
+            propExclusivaDto = this.PropriedadeExclusivaDoDto;
+        }
+
+        public void Deconstruct(out DateTime inicio, out DateTime fim, out int nota, out double total, out string observacao, out bool ativo)
+        {
+            inicio = this.Inicio;
+            fim = this.Fim;
+            nota = this.Nota;
+            total = this.Total;
+            observacao = this.Observacao;
+            ativo = this.Ativo;
+        }
     }
 }

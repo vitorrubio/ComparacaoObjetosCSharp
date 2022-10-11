@@ -50,10 +50,24 @@ Outra maneira é usando reflection para comparar as propriedades e fornecer uma l
 Também existem as possibilidades das novas versões do C# de se usar Record Types ou Destructurers + Tuples para a comparação. 
 No tutorial a seguir faremos em uma classe estática separadamente métodos para comparar objetos manualmente ou usando reflection. 
 Você pode colocar esse código na sua classe que deseja comparar, ou em classes utilitárias do seu projeto. 
-Confira a solution ShallowCompareDemo.sln, suas classes e testes.
+Confira a solution ShallowCompareDemo.sln, suas classes e testes. A classe estática ComparadorDeObjetos tem métodos que testam a igualdade de objetos sob várias óticas. 
 
 ### Forma 1 - comparação direta
 
-### Forma 2 - com reflection
+### Forma 2 - com reflection *
+É possível também, via reflection, comparar se objetos de classes diferentes ou até de structs diferentes são iguais.
 
 ### Forma 3 - com destructurers + tuples
+O C# moderno tem tuples (tuplas em português), que são conjuntos de dados estruturados sem necessariamente estarem orgnizados em um tipo customizado. É uma estrutura de dados semelhante a um registro em uma tabela de banco de dados, ou um struct do C#, mas com seus dados "soltos" ou "abertos".
+Alguns tipos de dados, como DictionaryEntry, record e record struct, podem ser desconstruídos em forma de tuplas e comparados. Outros tipos, como classes e structs definidos pelo programador, não tem esse suporte nativo a desconstrutores, mas um desconstrutor pode ser criado.  
+Criando desconstrutores para seus tipos no C# permite que você possa comparar dois objetos usando tuplas, permitindo também que algumas propriedades geradas por banco de dados ou calculadas (como Ids, totais etc) sejam ignoradas usando o operador de descarte "_".
+Na prática a comparação usando desconstrutores é a mesma coisa que a prática comparando as propriedades manualmente, podendo ser até mais verbosa, pois envolve a criação das variáveis, desconstrução, criação das tuplas e comparação das mesmas, o que pode ser propenso a erros. É uma curosidade interessante mas eu não recomendo isso no código do dia a dia. 
+Você pode ter desconstrutores com números de parâmetros diferentes, mas não pode ter dois desconstrutores com o mesmo número de parâmetros.
+
+## Referencias
+
+### Tuplas
+- [Tuplas](https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/value-tuples)
+
+### Desconstrutores
+- [Desconstrutores](https://learn.microsoft.com/pt-br/dotnet/csharp/fundamentals/functional/deconstruct)

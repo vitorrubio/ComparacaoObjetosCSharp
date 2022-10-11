@@ -19,6 +19,9 @@ namespace ShallowCompareDemo
             TesteComReflection();
             TesteObjetoQualquerComReflection();
 
+            TesteIgualdadeComTuplas();
+            TesteDesigualdadeComTuplas();
+
             Console.ReadLine();
         }
 
@@ -68,13 +71,13 @@ namespace ShallowCompareDemo
         static void TesteManual()
         {
             Console.WriteLine("Esses objetos devem ser iguais");
-            Console.WriteLine(ComparadorDeObjetos.SaoIguais(
+            Console.WriteLine(ComparadorDeObjetos.ComparacaoDireta(
                     new Agendamento {Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
                     new Agendamento {Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 }
                 ));
 
             Console.WriteLine("Esses objetos devem ser diferentes, a nota está diferente");
-            Console.WriteLine(ComparadorDeObjetos.SaoIguais(
+            Console.WriteLine(ComparadorDeObjetos.ComparacaoDireta(
                     new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
                     new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 }
                 ));
@@ -84,14 +87,14 @@ namespace ShallowCompareDemo
         static void TesteComReflection()
         {
             Console.WriteLine("Esses objetos devem ser iguais, repare o Id diferente sendo ignorado");
-            Console.WriteLine(ComparadorDeObjetos.SaoIguaisUsandoReflection(
+            Console.WriteLine(ComparadorDeObjetos.ComparacaoReflection(
                     new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
                     new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 2 },
                     "Id"
                 ));
 
             Console.WriteLine("Esses objetos devem ser diferentes, a nota está diferente, repare o Id diferente sendo ignorado");
-            Console.WriteLine(ComparadorDeObjetos.SaoIguaisUsandoReflection(
+            Console.WriteLine(ComparadorDeObjetos.ComparacaoReflection(
                     new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
                     new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1, Id = 2 },
                     "Id"
@@ -102,18 +105,75 @@ namespace ShallowCompareDemo
         static void TesteObjetoQualquerComReflection()
         {
             Console.WriteLine("Esses objetos devem ser iguais, repare o Id diferente sendo ignorado e o AgendamentoDTO não tem Id");
-            Console.WriteLine(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(
+            Console.WriteLine(ComparadorDeObjetos.ComparacaoTiposDiferentes(
                     new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
                     new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 },
                     "Id"
                 ));
 
             Console.WriteLine("Esses objetos devem ser diferentes, a nota está diferente, repare o Id diferente sendo ignorado e o AgendamentoDTO não tem Id");
-            Console.WriteLine(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(
+            Console.WriteLine(ComparadorDeObjetos.ComparacaoTiposDiferentes(
                     new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 },
                     new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 },
                     "Id"
                 ));
+        }
+
+
+        static void TesteIgualdadeComTuplas()
+        {
+            DateTime inicio;
+            DateTime fim; 
+            int nota; 
+            double total; 
+            string observacao; 
+            bool ativo;
+
+            var agendamento = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
+            (_, inicio, fim, nota, total, observacao, ativo) = agendamento;
+            var t1 = (inicio, fim, nota, total, observacao, ativo);
+
+            var agendamentoDto = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, PropriedadeExclusivaDoDto = false };
+            (inicio, fim, nota, total, observacao, ativo, _) = agendamentoDto;
+            var t2 = (inicio, fim, nota, total, observacao, ativo);
+
+            var agendamentoStruct = new AgendamentoStruct { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
+            (_, inicio, fim, nota, total, observacao, ativo) = agendamentoStruct;
+            var t3 = (inicio, fim, nota, total, observacao, ativo);
+
+            Console.WriteLine($"agendamento e agendamentoDto são iguais? { t1==t2 }");
+            Console.WriteLine($"agendamento e agendamentoStruct são iguais? {t1 == t3}");
+            Console.WriteLine($"agendamentoDto e agendamentoStruct são iguais? {t2  == t3}");
+            Console.WriteLine("");
+        }
+
+
+
+        static void TesteDesigualdadeComTuplas()
+        {
+            DateTime inicio;
+            DateTime fim;
+            int nota;
+            double total;
+            string observacao;
+            bool ativo;
+
+            var agendamento = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
+            (_, inicio, fim, nota, total, observacao, ativo) = agendamento;
+            var t1 = (inicio, fim, nota, total, observacao, ativo);
+
+            var agendamentoDto = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 6, Observacao = "teste", Total = 3.1, PropriedadeExclusivaDoDto = false };
+            (inicio, fim, nota, total, observacao, ativo, _) = agendamentoDto;
+            var t2 = (inicio, fim, nota, total, observacao, ativo);
+
+            var agendamentoStruct = new AgendamentoStruct { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 7, Observacao = "teste", Total = 3.1, Id = 1 };
+            (_, inicio, fim, nota, total, observacao, ativo) = agendamentoStruct;
+            var t3 = (inicio, fim, nota, total, observacao, ativo);
+
+            Console.WriteLine($"agendamento e agendamentoDto são iguais? {t1 == t2}");
+            Console.WriteLine($"agendamento e agendamentoStruct são iguais? {t1 == t3}");
+            Console.WriteLine($"agendamentoDto e agendamentoStruct são iguais? {t2 == t3}");
+            Console.WriteLine("");
         }
     }
 }

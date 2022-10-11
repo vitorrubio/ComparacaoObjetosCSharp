@@ -67,8 +67,8 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 };
             var b = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 };
 
-            Assert.IsTrue(ComparadorDeObjetos.SaoIguais(a, b));
-            Assert.IsTrue(ComparadorDeObjetos.SaoIguais(b, a));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoDireta(a, b));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoDireta(b, a));
         }
 
         [TestMethod]
@@ -77,7 +77,7 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 };
             var b = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 }; //nota diferente
 
-            Assert.IsFalse(ComparadorDeObjetos.SaoIguais(a, b));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoDireta(a, b));
         }
 
 
@@ -90,8 +90,8 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 0 };
             var b = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
 
-            Assert.IsTrue(ComparadorDeObjetos.SaoIguaisUsandoReflection(a, b, "Id"));
-            Assert.IsTrue(ComparadorDeObjetos.SaoIguaisUsandoReflection(b, a, "Id"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoReflection(a, b, "Id"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoReflection(b, a, "Id"));
         }
 
         [TestMethod]
@@ -100,7 +100,7 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 0 };
             var b = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
 
-            Assert.IsFalse(ComparadorDeObjetos.SaoIguaisUsandoReflection(a, b));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoReflection(a, b));
         }
 
         [TestMethod]
@@ -109,7 +109,7 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 0 };
             var b = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1, Id = 1 }; //nota diferente
 
-            Assert.IsFalse(ComparadorDeObjetos.SaoIguaisUsandoReflection(a, b, "Id"));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoReflection(a, b, "Id"));
         }
 
 
@@ -125,8 +125,8 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 0 };
             var b = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 };
 
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(a, b, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(b, a, "Id", "PropriedadeNovaApenasDesseLado"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(a, b, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(b, a, "Id", "PropriedadeExclusivaDoDto"));
         }
 
 
@@ -136,8 +136,8 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 1 };
             var b = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 };
 
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(a, b, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(b, a, "Id", "PropriedadeNovaApenasDesseLado"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(a, b, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(b, a, "Id", "PropriedadeExclusivaDoDto"));
         }
 
         [TestMethod]
@@ -146,7 +146,7 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 0 };
             var b = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 }; //nota diferente, Id sempre será ignorado porque não tem dos dois lados
 
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(a, b));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(a, b));
         }
 
         [TestMethod]
@@ -155,7 +155,7 @@ namespace ShallowCompareTest
             var a = new Agendamento { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 0 };
             var b = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1 }; //nota diferente
 
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(a, b, "Id"));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(a, b, "Id"));
         }
 
 
@@ -196,11 +196,11 @@ namespace ShallowCompareTest
             var b = new AgendamentoStruct { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1, Id = 0 };
             var c = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1};
 
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(a, b, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(b, c, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(c, a, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(c, b, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(b, a, "Id", "PropriedadeNovaApenasDesseLado"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(a, b, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(b, c, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(c, a, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(c, b, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(b, a, "Id", "PropriedadeExclusivaDoDto"));
         }
 
 
@@ -211,11 +211,11 @@ namespace ShallowCompareTest
             var b = new AgendamentoStruct { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 4, Observacao = "teste", Total = 3.1, Id = 0 };//nota diferente
             var c = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 3, Observacao = "teste", Total = 3.1 };//nota diferente
 
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(a, b, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(b, c, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(c, a, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(c, b, "Id", "PropriedadeNovaApenasDesseLado"));
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(b, a, "Id", "PropriedadeNovaApenasDesseLado"));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(a, b, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(b, c, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(c, a, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(c, b, "Id", "PropriedadeExclusivaDoDto"));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(b, a, "Id", "PropriedadeExclusivaDoDto"));
         }
 
 
@@ -229,13 +229,13 @@ namespace ShallowCompareTest
             var c = new AgendamentoDto { Ativo = true, Inicio = new DateTime(2022, 8, 19), Fim = new DateTime(2022, 8, 20), Nota = 5, Observacao = "teste", Total = 3.1 };
 
             //esses de fato são iguais 
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(a, b));
-            Assert.IsTrue(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(b, a));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(a, b));
+            Assert.IsTrue(ComparadorDeObjetos.ComparacaoTiposDiferentes(b, a));
 
             //diferentes por causa de propriedades diferentes
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(b, c));
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(c, a));
-            Assert.IsFalse(ComparadorDeObjetos.ObjetosDiferentesSaoIguaisUsandoReflection(c, b));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(b, c));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(c, a));
+            Assert.IsFalse(ComparadorDeObjetos.ComparacaoTiposDiferentes(c, b));
             
         }
     }

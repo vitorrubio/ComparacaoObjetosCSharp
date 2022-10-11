@@ -49,7 +49,6 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ComparacaoDeDatasTest.cs" />
     <Compile Include="ShallowCompareTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

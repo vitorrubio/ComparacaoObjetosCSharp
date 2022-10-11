@@ -15,7 +15,7 @@ namespace ShallowCompareDemo
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static bool SaoIguais(Agendamento a, Agendamento b)
+        public static bool ComparacaoDireta(Agendamento a, Agendamento b)
         {
             return
                 a.Inicio == b.Inicio
@@ -33,7 +33,7 @@ namespace ShallowCompareDemo
         /// <param name="b"></param>
         /// <param name="ignoreProps"></param>
         /// <returns></returns>
-        public static bool SaoIguaisUsandoReflection(Agendamento a, Agendamento b, params string[] ignoreProps)
+        public static bool ComparacaoReflection(Agendamento a, Agendamento b, params string[] ignoreProps)
         {
             //se os dois são null então ambos são iguais 
             if(a == null && b == null)
@@ -81,7 +81,7 @@ namespace ShallowCompareDemo
         /// <param name="b"></param>
         /// <param name="ignoreProps"></param>
         /// <returns></returns>
-        public static bool ObjetosDiferentesSaoIguaisUsandoReflection(Object a, Object b, params string[] ignoreProps)
+        public static bool ComparacaoTiposDiferentes(Object a, Object b, params string[] ignoreProps)
         {
             //se os dois são null então ambos são iguais 
             if(a == null && b == null)
