@@ -23,6 +23,14 @@ namespace ValuesAndReferenceTypes
     //Novo no C# 9, é um reference type
     public record UsuarioRecord(int Id, string Nome, DateTime DataNascimento);
 
+    //um tipo diferente de record, mutável
+    public record Pessoa
+    {
+        public int Id { get; set; }
+        public string Nome { get; set; }
+        public DateTime DataNascimento { get; set; }
+    }
+
     //novo no C# 10, é um value type
     public record struct UsuarioRecordStruct(int Id, string Nome, DateTime DataNascimento);
 }

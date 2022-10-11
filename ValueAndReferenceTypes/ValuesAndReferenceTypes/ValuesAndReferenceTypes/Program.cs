@@ -28,3 +28,4 @@ Console.WriteLine($"Os itens UsuarioRecordStruct são iguais com Equals ? {urs1.
 
 
 Console.ReadLine();
+
